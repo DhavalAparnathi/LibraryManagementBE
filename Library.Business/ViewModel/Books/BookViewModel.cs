@@ -1,6 +1,6 @@
-﻿namespace Library.Models.Books
+﻿namespace Library.Business.ViewModel
 {
-    public class Books
+    public class BookViewModel
     {
         public int Id { get; set; }
 
@@ -8,13 +8,11 @@
 
         public string Author { get; set; } = string.Empty;
 
-        public string Genre { get; set; } = string.Empty;
+        public string? Genre { get; set; }
 
         public int TotalCopies { get; set; }
 
         public int AvailableCopies { get; set; }
-
-        public DateTime AddedAt { get; set; }
 
         public int AddedBy { get; set; }
 

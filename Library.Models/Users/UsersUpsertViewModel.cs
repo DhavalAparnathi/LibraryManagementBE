@@ -1,6 +1,6 @@
-﻿namespace Library.Models.Users
+﻿namespace Library.Business.ViewModel
 {
-    public class Users
+    public class UsersUpsertViewModel
     {
         public int Id { get; set; }
 
@@ -12,11 +12,6 @@
 
         public string PhoneNumber { get; set; } = string.Empty;
 
-        public string Role { get; set; } = string.Empty;
-
         public bool IsActive { get; set; }
-
-        public bool IsDeleted { get; set; } = false;
-
     }
 }

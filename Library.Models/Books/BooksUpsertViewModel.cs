@@ -1,8 +1,8 @@
-﻿namespace Library.Models.Books
+﻿namespace Library.Business.ViewModel
 {
-    public class Books
+    public class BooksUpsertViewModel
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
 
         public string Name { get; set; } = string.Empty;
 
@@ -13,14 +13,6 @@
         public int TotalCopies { get; set; }
 
         public int AvailableCopies { get; set; }
-
-        public DateTime AddedAt { get; set; }
-
-        public int AddedBy { get; set; }
-
-        public bool HasIssued { get; set; }
-
-        public int? IssueId { get; set; }
 
     }
 }
