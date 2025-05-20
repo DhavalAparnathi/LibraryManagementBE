@@ -54,6 +54,7 @@ namespace Library.Business.Provider.Book
                     AddedBy = b.AddedBy,
                     HasIssued = b.HasIssued,
                     IssueId = b.IssueId,
+                    IssuedUserCount = b.IssuedUserCount
                 }).ToList();
 
                 var pageCount = (int)Math.Ceiling((double)totalCount / requestModel.PageSize);

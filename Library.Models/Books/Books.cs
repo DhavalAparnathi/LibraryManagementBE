@@ -22,5 +22,9 @@
 
         public int? IssueId { get; set; }
 
+        public int? IssuedUserCount { get; set; }
+
+
+
     }
 }
