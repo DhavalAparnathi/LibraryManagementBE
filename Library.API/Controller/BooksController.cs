@@ -53,7 +53,7 @@ namespace Library.API.Controller
         /// <returns>Standardized response indicating success or failure.</returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public BaseResponse DeleteBookById(int id)
+        public IActionResult DeleteBookById(int id)
         {
             try
             {
@@ -61,13 +61,26 @@ namespace Library.API.Controller
                     throw new DataValidationException(Messages.Book.InValidBookId);
 
                 _bookProvider.DeleteBookById(id);
-                return ApiSuccess(APIStatusCode.Ok, Messages.Book.BookDeleteSuccess);
+                return Ok(new BaseResponse
+                {
+                    StatusCode = (APIStatusCode)(int)APIStatusCode.Ok,
+                    Message = Messages.Book.BookDeleteSuccess
+                });
+            }
+            catch (DataValidationException ex)
+            {
+                return BadRequest(new BaseResponse
+                {
+                    StatusCode = (APIStatusCode)(int)APIStatusCode.BadRequest,
+                    Message = ex.Message
+                });
             }
             catch
             {
                 throw;
             }
         }
+
 
         /// <summary>
         /// Adds a new book or updates an existing one.
@@ -98,12 +111,12 @@ namespace Library.API.Controller
         /// </summary>
         /// <returns>List of genres as strings.</returns>
         [Authorize(Roles = "Admin, User")]
-        [HttpGet("genres")]
+        [HttpGet("get-all-genres")]
         public BaseResponse GetGenreList()
         {
             try
             {
-                var genres = Enums.Genres;
+                var genres = _bookProvider.GetGenreList();
                 return ApiSuccess(APIStatusCode.Ok, Messages.Book.GenreListSuccess, genres);
             }
             catch

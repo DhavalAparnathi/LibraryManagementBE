@@ -39,7 +39,7 @@ namespace Library.Business.Provider.Book
                     SortDirection = model.SortDirection,
                     Name = model.Filters.Name?.Trim(),
                     Author = model.Filters.Author?.Trim(),
-                    Genre = model.Filters.Genre?.Trim()
+                    GenreId = model.Filters.GenreId > 0 ? model.Filters.GenreId : null
                 };
 
                 var (books, totalCount) = _bookService.GetBookList(requestModel, userId);
@@ -49,7 +49,8 @@ namespace Library.Business.Provider.Book
                     Id = b.Id,
                     Name = b.Name,
                     Author = b.Author,
-                    Genre = b.Genre,
+                    GenreId = b.GenreId,
+                    GenreName = b.GenreName,
                     TotalCopies = b.TotalCopies,
                     AvailableCopies = b.AvailableCopies,
                     AddedBy = b.AddedBy,
@@ -101,6 +102,15 @@ namespace Library.Business.Provider.Book
 
             int currentUserId = _workContext.CurrentUserId;
             _bookService.UpsertBook(model, currentUserId);
+        }
+
+        /// <summary>
+        /// Gets the list of all the Genres 
+        /// </summary>
+        /// <returns>List of all the Genres</returns>
+        public List<GenreViewModel> GetGenreList()
+        {
+            return _bookService.GetAllGenres();
         }
 
     }

@@ -21,6 +21,8 @@
             public static string BookIssuedSuccess = "Book issued successfully.";
             public static string BookReturnedSuccess = "Book returned successfully.";
             public static string GenreListSuccess = "Genre list retrieved successfully.";
+            public static string BookDeleteError = "Cannot delete the book because it is currently issued to a user.";
+            public static string BookDeleteSqlError = "Cannot delete the book as it has active borrow records.";
         }
 
         public static class User

@@ -3,6 +3,8 @@ using Library.Business.ViewModel;
 using Library.Data.Repository;
 using Library.Models.Books;
 using Library.Utilities.Constants;
+using Library.Utilities.ExceptionHandler;
+using Microsoft.Data.SqlClient;
 
 namespace Library.Services.Book
 {
@@ -21,7 +23,7 @@ namespace Library.Services.Book
         /// <param name="model">Model containing pagination, filter, and sort options.</param>
         /// <param name="userId">The ID of the user requesting the book list.</param>
         /// <returns>A tuple containing the list of books and the total count.</returns>
-        public (List<Books> Books, int TotalCount) GetBookList(BookList model, int userId)
+        public (List<BookWithGenre> Books, int TotalCount) GetBookList(BookList model, int userId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("PageIndex", model.PageNumber);
@@ -30,10 +32,10 @@ namespace Library.Services.Book
             parameters.Add("SortDirection", model.SortDirection);
             parameters.Add("Name", model.Name);
             parameters.Add("Author", model.Author);
-            parameters.Add("Genre", model.Genre);
+            parameters.Add("GenreId", model.GenreId);
             parameters.Add("UserId", userId);
 
-            var (books, totalCount) = _dapperService.QueryMultiple<Books, int>(StoredProcedures.GetAllBooks, parameters);
+            var (books, totalCount) = _dapperService.QueryMultiple<BookWithGenre, int>(StoredProcedures.GetAllBooks, parameters);
 
             return (books, totalCount);
         }
@@ -47,7 +49,18 @@ namespace Library.Services.Book
             var parameters = new DynamicParameters();
             parameters.Add("Id", bookId);
 
-            _dapperService.Execute(StoredProcedures.DeleteBookById, parameters);
+            try
+            {
+                _dapperService.Execute(StoredProcedures.DeleteBookById, parameters);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains(Messages.Book.BookDeleteSqlError))
+                {
+                    throw new DataValidationException(Messages.Book.BookDeleteError);
+                }
+                throw;
+            }
         }
 
         /// <summary>
@@ -61,7 +74,7 @@ namespace Library.Services.Book
             parameters.Add("Id", model.Id);
             parameters.Add("Name", model.Name);
             parameters.Add("Author", model.Author);
-            parameters.Add("Genre", model.Genre);
+            parameters.Add("GenreId", model.GenreId);
             parameters.Add("TotalCopies", model.TotalCopies);
             parameters.Add("AvailableCopies", model.AvailableCopies);
             parameters.Add("AddedBy", addedBy);
@@ -69,5 +82,10 @@ namespace Library.Services.Book
             _dapperService.Execute(StoredProcedures.UpsertBook, parameters);
         }
 
+        public List<GenreViewModel> GetAllGenres()
+        {
+            var genres = _dapperService.Query<GenreViewModel>(StoredProcedures.GetAllGenres);
+            return genres.ToList();
+        }
     }
 }

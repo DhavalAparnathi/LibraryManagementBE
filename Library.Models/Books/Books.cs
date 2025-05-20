@@ -8,7 +8,7 @@
 
         public string Author { get; set; } = string.Empty;
 
-        public string Genre { get; set; } = string.Empty;
+        public int GenreId { get; set; }
 
         public int TotalCopies { get; set; }
 
@@ -23,8 +23,6 @@
         public int? IssueId { get; set; }
 
         public int? IssuedUserCount { get; set; }
-
-
 
     }
 }
