@@ -26,5 +26,23 @@ namespace Library.Utilities.Constants
             NotAllowed = 405,
             Conflict = 409
         }
+
+        public static readonly List<string> Genres = new List<string>
+        {
+            "Fiction",
+            "Non-Fiction",
+            "Science Fiction",
+            "Fantasy",
+            "Mystery",
+            "Thriller",
+            "Romance",
+            "Horror",
+            "Biography",
+            "History",
+            "Children",
+            "Young Adult",
+            "Self-Help",
+            "Poetry"
+        };
     }
 }

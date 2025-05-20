@@ -20,6 +20,7 @@
             public static string BookFetchSuccess = "Issued books fetched successfully.";
             public static string BookIssuedSuccess = "Book issued successfully.";
             public static string BookReturnedSuccess = "Book returned successfully.";
+            public static string GenreListSuccess = "Genre list retrieved successfully.";
         }
 
         public static class User

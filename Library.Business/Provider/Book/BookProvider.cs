@@ -38,7 +38,8 @@ namespace Library.Business.Provider.Book
                     SortColumn = model.SortColumn,
                     SortDirection = model.SortDirection,
                     Name = model.Filters.Name?.Trim(),
-                    Author = model.Filters.Author?.Trim()
+                    Author = model.Filters.Author?.Trim(),
+                    Genre = model.Filters.Genre?.Trim()
                 };
 
                 var (books, totalCount) = _bookService.GetBookList(requestModel, userId);

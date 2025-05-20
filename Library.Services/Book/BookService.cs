@@ -30,6 +30,7 @@ namespace Library.Services.Book
             parameters.Add("SortDirection", model.SortDirection);
             parameters.Add("Name", model.Name);
             parameters.Add("Author", model.Author);
+            parameters.Add("Genre", model.Genre);
             parameters.Add("UserId", userId);
 
             var (books, totalCount) = _dapperService.QueryMultiple<Books, int>(StoredProcedures.GetAllBooks, parameters);

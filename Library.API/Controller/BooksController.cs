@@ -93,5 +93,24 @@ namespace Library.API.Controller
             }
         }
 
+        /// <summary>
+        /// Retrieves the list of available genres.
+        /// </summary>
+        /// <returns>List of genres as strings.</returns>
+        [Authorize(Roles = "Admin, User")]
+        [HttpGet("genres")]
+        public BaseResponse GetGenreList()
+        {
+            try
+            {
+                var genres = Enums.Genres;
+                return ApiSuccess(APIStatusCode.Ok, Messages.Book.GenreListSuccess, genres);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
     }
 }
