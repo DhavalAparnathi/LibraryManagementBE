@@ -4,6 +4,7 @@ using Library.Utilities.Constants;
 using Library.Utilities.ExceptionHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using static Library.Utilities.Constants.Enums;
 
 namespace Library.API.Controller
@@ -84,6 +85,10 @@ namespace Library.API.Controller
                     return ApiSuccess(APIStatusCode.Ok, model.Id > 0 ? Messages.User.UserUpdateSuccess : Messages.User.UserAddedSuccess);
                 }
                 throw new DataValidationException(ModelState);
+            }
+            catch (SqlException ex) when (ex.Message.Contains(Messages.Authentication.SameEmailAlreadyExist))
+            {
+                return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
             }
             catch
             {
