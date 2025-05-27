@@ -14,6 +14,13 @@ using Library.Services.Book;
 using Library.Business.Provider.WorkContext;
 using Library.Business.Provider;
 using Library.Services.IssueService;
+using Library.Business.Provider.Timetable;
+using Library.Services;
+using Library.Business.Provider.Department;
+using Library.Services.Departments;
+using Library.Services.Department;
+using Library.Business.Provider.Subject;
+using Library.Services.Subject;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,11 +68,17 @@ builder.Services.AddScoped<IAuthenticationProvider, AuthenticationProvider>();
 builder.Services.AddScoped<IBookProvider, BookProvider>();
 builder.Services.AddScoped<IIssueProvider, IssueProvider>();
 builder.Services.AddScoped<IUserProvider, UserProvider>();
+builder.Services.AddScoped<IDepartmentProvider, DepartmentProvider>();
+builder.Services.AddScoped<ISubjectProvider, SubjectProvider>();
+builder.Services.AddScoped<ITimetableProvider, TimetableProvider>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IIssueService, IssueService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ITimetableService, TimetableService>();
 builder.Services.AddScoped<IJwtTokenHelper, JwtTokenHelper>();
 
 

@@ -1,7 +1,7 @@
 ﻿namespace Library.Utilities.Constants
 {
     // Stored procedure stored in static public accessible with the Name
-    public static class StoredProcedures 
+    public static class StoredProcedures
     {
         public static string GetAllUsers => "GetAllUsers";
 
@@ -30,6 +30,28 @@
         public static string IsEmailExists => "IsEmailExists";
 
         public const string GetAllGenres = "GetAllGenres";
+
+        public const string GetAllDaysOfWeek = "GetAllDaysOfWeek";
+
+        public const string ValidateUser = "ValidateUser";
+
+        public const string GetAllDepartments = "GetAllDepartments";
+
+        public const string GetAllDepartmentsList = "GetAllDepartmentsList";
+
+        public const string DeleteDepartmentById = "DeleteDepartmentById";
+
+        public const string UpsertDepartment = "UpsertDepartment";
+
+        public const string GetAllSubjects = "GetAllSubjects";
+
+        public const string DeleteSubjectById = "DeleteSubjectById";
+
+        public const string UpsertSubject = "UpsertSubject";
+
+        public const string GetSubjectsByDepartment = "GetSubjectsByDepartment";
+
+        public const string GetSubjectById = "GetSubjectById";
 
     }
 }

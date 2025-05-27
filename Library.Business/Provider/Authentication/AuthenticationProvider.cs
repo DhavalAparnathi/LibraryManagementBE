@@ -1,8 +1,6 @@
 ﻿using Library.Business.ViewModel.Authentication;
 using Library.Services.JwtToken;
-using Library.Services.Authentication;
-using Library.Business.ViewModel;
-using Library.Utilities.Constants;
+using Library.Services.Authentication;using Library.Utilities.Constants;
 
 namespace Library.Business.Provider.Authentication
 {
@@ -26,7 +24,7 @@ namespace Library.Business.Provider.Authentication
         public AuthResponseViewModel Login(AuthenticationViewModel model)
         {
             // Validate the user by id pass whether exist in DB or not
-            var user = _authService.ValidateUser(model.Email, model.Password); 
+            var user = _authService.ValidateUser(model.Email, model.Password);
 
             if (user == null || !user.IsActive)
             {
@@ -34,13 +32,13 @@ namespace Library.Business.Provider.Authentication
             }
 
             // Generate a role based JWT Token based on inserted valid credentials
-            var token = _jwtHelper.GenerateToken(user); 
+            var token = _jwtHelper.GenerateToken(user);
 
             return new AuthResponseViewModel
             {
                 UserId = user.Id,
                 Email = user.Email,
-                Role = user.Role,
+                Role = user.RoleName,
                 Token = token
             };
         }
@@ -50,13 +48,13 @@ namespace Library.Business.Provider.Authentication
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void Register(RegisterViewModel model)
-        {
-            if (model == null)
-                throw new ArgumentNullException(nameof(model));
+        //public void Register(RegisterViewModel model)
+        //{
+        //    if (model == null)
+        //        throw new ArgumentNullException(nameof(model));
 
-            _authService.Register(model);
-        }
+        //    _authService.Register(model);
+        //}
 
     }
 }

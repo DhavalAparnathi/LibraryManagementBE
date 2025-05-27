@@ -12,6 +12,10 @@
 
         public string PhoneNumber { get; set; } = string.Empty;
 
+        public int RoleId { get; set; }
+
+        public int DepartmentId { get; set; }
+
         public bool IsActive { get; set; }
     }
 }

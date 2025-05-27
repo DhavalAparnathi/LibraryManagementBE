@@ -13,7 +13,7 @@ namespace Library.Services.Authentication
         /// <summary>
         /// Register method that takes user input values & creates a user with entered data.
         /// </summary>
-        void Register(RegisterViewModel model);
+        //void Register(RegisterViewModel model);
 
     }
 }

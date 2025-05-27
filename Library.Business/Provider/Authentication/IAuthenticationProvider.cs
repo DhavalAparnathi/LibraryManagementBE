@@ -1,10 +1,4 @@
-﻿using Library.Business.ViewModel;
-using Library.Business.ViewModel.Authentication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Library.Business.ViewModel.Authentication;
 
 namespace Library.Business.Provider.Authentication
 {
@@ -12,6 +6,6 @@ namespace Library.Business.Provider.Authentication
     {
         AuthResponseViewModel Login(AuthenticationViewModel model);
 
-        void Register(RegisterViewModel model);
+        //void Register(RegisterViewModel model);
     }
 }

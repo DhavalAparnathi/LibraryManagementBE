@@ -40,5 +40,29 @@
             public static string USER = "User";
             public static string ADMIN = "Admin";
         }
+
+        public static class Department
+        {
+            public const string InvalidDepartmentId = "Invalid department ID.";
+            public const string DepartmentDeleteSuccess = "Department deleted successfully.";
+            public const string DepartmentAddSuccess = "Department added successfully.";
+            public const string DepartmentUpdateSuccess = "Department updated successfully.";
+            public const string DepartmentListFetchSuccess = "Department list fetched successfully.";
+            public const string DepartmentDeleteError = "Department delete error.";
+            public const string DepartmentDeleteSqlError = "Error in deleting department.";
+        }
+
+        public static class Subject
+        {
+            public const string InvalidSubjectId = "Invalid subject ID.";
+            public const string SubjectListFetchSuccess = "Subject list fetched successfully.";
+            public const string SubjectAddSuccess = "Subject added successfully.";
+            public const string SubjectUpdateSuccess = "Subject updated successfully.";
+            public const string SubjectDeleteSuccess = "Subject deleted successfully.";
+            public const string SubjectDeleteSqlError = "Error in deleting subject.";
+            public const string SubjectDeleteError = "Subject delete error.";
+            public const string SubjectFetchSuccess = "Subject fetched successfully.";
+
+        }
     }
 }

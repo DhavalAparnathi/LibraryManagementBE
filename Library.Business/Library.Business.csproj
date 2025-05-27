@@ -11,6 +11,11 @@
     <ProjectReference Include="..\Library.Utilities\Library.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Provider\Department\" />
+    <Folder Include="ViewModel\Subject\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

@@ -66,7 +66,8 @@ namespace Library.Services.User
 
             string hashedPassword = new PasswordHasher<string>().HashPassword(null, model.PasswordHash);
             parameters.Add("PasswordHash", hashedPassword);
-            parameters.Add("Role", Messages.Role.USER);
+            parameters.Add("RoleId", model.RoleId);
+            parameters.Add("DepartmentId", model.DepartmentId);
 
             _dapperService.Execute(StoredProcedures.UpsertUser, parameters);
         }

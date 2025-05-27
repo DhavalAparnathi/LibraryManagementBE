@@ -51,29 +51,29 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Returns success response & creates a user</returns>
-        [AllowAnonymous]
-        [HttpPost("register")]
-        public BaseResponse RegisterUser([FromBody] RegisterViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    _authProvider.Register(model);
-                    return ApiSuccess(APIStatusCode.Ok, Messages.Authentication.RegisteredSuccessfully);
-                }
+        //[AllowAnonymous]
+        //[HttpPost("register")]
+        //public BaseResponse RegisterUser([FromBody] RegisterViewModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            _authProvider.Register(model);
+        //            return ApiSuccess(APIStatusCode.Ok, Messages.Authentication.RegisteredSuccessfully);
+        //        }
 
-                throw new DataValidationException(ModelState);
-            }
-            catch (SqlException ex) when (ex.Message.Contains(Messages.Authentication.SameEmailAlreadyExist))
-            {
-                return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
-            }
-            catch 
-            {
-                throw;
-            }
-        }
+        //        throw new DataValidationException(ModelState);
+        //    }
+        //    catch (SqlException ex) when (ex.Message.Contains(Messages.Authentication.SameEmailAlreadyExist))
+        //    {
+        //        return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
+        //    }
+        //    catch 
+        //    {
+        //        throw;
+        //    }
+        //}
 
     }
 }
