@@ -9,6 +9,8 @@
             public static string SameEmailAlreadyExist = "A user with this email already exists.";
             public static string InvalidCredentials = "Invalid credentials.";
             public static string InvalidAuthentication = "Authentication may be missing or invalid.";
+            public static string PasswordResetSuccess = "Password reset successful.";
+            public static string InvalidOldPassword = "Old Password is invalid.";
         }
 
         public static class Book
@@ -33,6 +35,7 @@
             public static string UserUpdateSuccess = "User updated successfully.";
             public static string UserFetchedSuccess = "User fetched successfully.";
             public static string UserNotFound = "User not found.";
+            public static string RolesFetchSuccess = "Roles fetched successfully.";
         }
 
         public static class Role

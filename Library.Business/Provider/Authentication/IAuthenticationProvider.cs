@@ -7,5 +7,7 @@ namespace Library.Business.Provider.Authentication
         AuthResponseViewModel Login(AuthenticationViewModel model);
 
         //void Register(RegisterViewModel model);
+
+        void ResetPassword(ResetPasswordViewModel model);
     }
 }

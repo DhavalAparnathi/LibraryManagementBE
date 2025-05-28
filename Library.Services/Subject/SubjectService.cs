@@ -16,6 +16,10 @@ namespace Library.Services.Subject
             _dapperService = dapperService;
         }
 
+        /// <summary>
+        /// Gets list of all the subjects.
+        /// </summary>
+        /// <returns>List of all the Subjects.</returns>
         public List<SubjectViewModel> GetAllSubjects()
         {
             var subjects = _dapperService.Query<SubjectViewModel>(
@@ -24,6 +28,10 @@ namespace Library.Services.Subject
             return subjects.ToList();
         }
 
+        /// <summary>
+        /// Method that handles the add/edit of the Subject performed by Admin.
+        /// </summary>
+        /// <param name="model">model type of SubjectUpsertViewModel</param>
         public void UpsertSubject(SubjectUpsertViewModel model)
         {
             var parameters = new DynamicParameters();
@@ -35,6 +43,11 @@ namespace Library.Services.Subject
             _dapperService.Execute(StoredProcedures.UpsertSubject, parameters);
         }
 
+        /// <summary>
+        /// Method that deletes the subject by Id.
+        /// </summary>
+        /// <param name="subjectId">subject Id which is being passed to delete the specific Subject.</param>
+        /// <exception cref="DataValidationException">Exception for subject delete error.</exception>
         public void DeleteSubjectById(int subjectId)
         {
             var parameters = new DynamicParameters();
@@ -54,6 +67,11 @@ namespace Library.Services.Subject
             }
         }
 
+        /// <summary>
+        /// Method that retrieves the subject by Id.
+        /// </summary>
+        /// <param name="subjectId">Subject Id of which data is fetching.</param>
+        /// <returns>Subject data with appropriate response message.</returns>
         public Subjects GetSubjectById(int subjectId)
         {
             var parameters = new DynamicParameters();
@@ -61,7 +79,12 @@ namespace Library.Services.Subject
 
             return _dapperService.QueryFirstOrDefault<Subjects>(StoredProcedures.GetSubjectById, parameters);
         }
-        
+
+        /// <summary>
+        /// Method that retrieves subject by departmentId.
+        /// </summary>
+        /// <param name="departmentId">Expected department's subject departmentId.</param>
+        /// <returns>List of subjects for the Specific departmentId.</returns>
         public List<Subjects> GetSubjectsByDepartmentId(int departmentId)
         {
             var parameters = new DynamicParameters();

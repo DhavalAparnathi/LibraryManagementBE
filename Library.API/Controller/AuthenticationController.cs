@@ -3,9 +3,7 @@ using Library.Business.ViewModel;
 using Library.Business.ViewModel.Authentication;
 using Library.Utilities.Constants;
 using Library.Utilities.ExceptionHandler;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using static Library.Utilities.Constants.Enums;
 
 namespace Library.API.Controller
@@ -74,6 +72,29 @@ namespace Library.API.Controller
         //        throw;
         //    }
         //}
+
+        /// <summary>
+        /// Method that resets user password based on confirmation of old password & new password.
+        /// </summary>
+        /// <returns>Generates a new password.</returns>
+        [HttpPost("reset-password")]
+        public BaseResponse ResetPassword([FromBody] ResetPasswordViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _authProvider.ResetPassword(model);
+                    return ApiSuccess(APIStatusCode.Ok, Messages.Authentication.PasswordResetSuccess);
+                }
+                throw new DataValidationException(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return ApiError(APIStatusCode.ServerError, ex.Message);
+            }
+
+        }
 
     }
 }

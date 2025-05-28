@@ -17,6 +17,12 @@ namespace Library.Business.Provider.Department
             _workContext = workContext;
         }
 
+        /// <summary>
+        /// Method that retrieves the list of departments.
+        /// </summary>
+        /// <param name="model">model parameter of type DepartmentListViewModel</param>
+        /// <param name="userId">Current userId</param>
+        /// <returns>A list of departments</returns>
         public PagedResult<DepartmentViewModel> GetDepartmentList(DepartmentListViewModel model, int userId)
         {
             if (userId <= 0)
@@ -37,7 +43,8 @@ namespace Library.Business.Provider.Department
             {
                 DepartmentId = d.DepartmentId,
                 DepartmentName = d.DepartmentName,
-                Description = d.Description
+                Description = d.Description,
+                CreatedDate = d.CreatedDate
             }).ToList();
 
             return new PagedResult<DepartmentViewModel>
@@ -51,6 +58,10 @@ namespace Library.Business.Provider.Department
             };
         }
 
+        /// <summary>
+        /// Method that deletes the department by departmentId
+        /// </summary>
+        /// <param name="departmentId">Entered departmentId to delete</param>
         public void DeleteDepartmentById(int departmentId)
         {
             if (departmentId <= 0)
@@ -59,6 +70,10 @@ namespace Library.Business.Provider.Department
             _departmentService.DeleteDepartmentById(departmentId);
         }
 
+        /// <summary>
+        /// Mehtod that upserts the Department data into Department table.
+        /// </summary>
+        /// <param name="model">Model of DepartmentUpsertViewModel</param>
         public void UpsertDepartment(DepartmentUpsertViewModel model)
         {
             if (model == null)
@@ -77,7 +92,10 @@ namespace Library.Business.Provider.Department
             _departmentService.UpsertDepartment(upsertModel, currentUserId);
         }
 
-
+        /// <summary>
+        /// Retrieves all the departments.
+        /// </summary>
+        /// <returns>List of all the departments.</returns>
         public List<DepartmentViewModel> GetAllDepartments()
         {
             return _departmentService.GetAllDepartments();

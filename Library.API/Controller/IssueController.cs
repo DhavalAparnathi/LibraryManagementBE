@@ -8,7 +8,7 @@ using static Library.Utilities.Constants.Enums;
 
 namespace Library.API.Controller
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "Student")]
     [ApiController]
     [Route("issue")]
     public class IssueController : BaseController

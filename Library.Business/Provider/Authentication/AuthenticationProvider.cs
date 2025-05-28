@@ -56,5 +56,14 @@ namespace Library.Business.Provider.Authentication
         //    _authService.Register(model);
         //}
 
+        /// <summary>
+        /// Method that resets user password based on confirmation of old password & new password.
+        /// </summary>
+        public void ResetPassword(ResetPasswordViewModel model)
+        {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+            _authService.ResetPassword(model.UserId,model.OldPassword, model.NewPassword);
+        }
     }
 }

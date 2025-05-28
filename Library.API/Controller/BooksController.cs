@@ -25,7 +25,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="model">Filter and pagination criteria for retrieving books.</param>
         /// <returns>Standardized response containing the paginated book list.</returns>
-        [Authorize(Roles = "Admin, User")]
+        [Authorize(Roles = "Admin, Student")]
         [HttpPost("list")]
         public BaseResponse GetBookList([FromBody] BookListViewModel model)
         {
@@ -110,7 +110,7 @@ namespace Library.API.Controller
         /// Retrieves the list of available genres.
         /// </summary>
         /// <returns>List of genres as strings.</returns>
-        [Authorize(Roles = "Admin, User")]
+        [Authorize(Roles = "Admin, Student")]
         [HttpGet("get-all-genres")]
         public BaseResponse GetGenreList()
         {

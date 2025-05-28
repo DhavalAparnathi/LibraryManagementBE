@@ -10,11 +10,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Attendance\" />
-    <Folder Include="TImeTableSlots\" />
-    <Folder Include="TimeTables\" />
-    <Folder Include="Roles\" />
-  </ItemGroup>
-
 </Project>

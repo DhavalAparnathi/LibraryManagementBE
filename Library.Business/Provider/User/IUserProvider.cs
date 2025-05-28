@@ -1,4 +1,5 @@
 ﻿using Library.Business.ViewModel;
+using Library.Models.Roles;
 using Library.Models.Users;
 
 namespace Library.Business.Provider.User
@@ -12,6 +13,8 @@ namespace Library.Business.Provider.User
         void UpsertUser(UsersUpsertViewModel model);
 
         Users? GetUserById(int userId);
+
+        List<Roles> GetAllRoles();
 
     }
 }

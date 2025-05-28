@@ -19,6 +19,10 @@ namespace Library.API.Controller
             _subjectProvider = subjectProvider;
         }
 
+        /// <summary>
+        /// Gets list of all the subjects.
+        /// </summary>
+        /// <returns>List of all the Subjects.</returns>
         [Authorize(Roles = "Admin, HOD, Teacher, AssistantTeacher, Student")]
         [HttpGet("get-all")]
         public BaseResponse GetAllSubjects()
@@ -34,6 +38,11 @@ namespace Library.API.Controller
             }
         }
 
+        /// <summary>
+        /// Method that handles the add/edit of the Subject performed by Admin.
+        /// </summary>
+        /// <param name="model">model type of SubjectUpsertViewModel</param>
+        /// <returns>Success response with the newly generated subjectId.</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost("upsert")]
         public BaseResponse UpsertSubject([FromBody] SubjectUpsertViewModel model)
@@ -54,7 +63,11 @@ namespace Library.API.Controller
             }
         }
 
-
+        /// <summary>
+        /// Method that deletes the subject by Id.
+        /// </summary>
+        /// <param name="subjectId">SubjectId which needed to be deleted.</param>
+        /// <returns>Success or exception message.</returns>
         [Authorize(Roles = "Admin")]
         [HttpDelete("{subjectId}")]
         public IActionResult DeleteSubjectById(int subjectId)
@@ -85,7 +98,11 @@ namespace Library.API.Controller
             }
         }
 
-
+        /// <summary>
+        /// Method that retrieves the subject by Id.
+        /// </summary>
+        /// <param name="subjectId">Subject Id of which data is fetching.</param>
+        /// <returns>Subject data with appropriate response message.</returns>
         [Authorize]
         [HttpGet("subject-by-Id/{subjectId}")]
         public BaseResponse GetSubjectById(int subjectId)
@@ -104,6 +121,11 @@ namespace Library.API.Controller
             }
         }
 
+        /// <summary>
+        /// Method that retrieves subject by departmentId.
+        /// </summary>
+        /// <param name="departmentId">Expected department's subject departmentId.</param>
+        /// <returns>List of subjects for the Specific departmentId.</returns>
         [Authorize]
         [HttpGet("by-departmentId/{departmentId}")]
         public BaseResponse GetSubjectsByDepartmentId(int departmentId)

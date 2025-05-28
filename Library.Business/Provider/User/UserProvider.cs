@@ -1,6 +1,7 @@
 ﻿using Library.Business.Mapper;
 using Library.Business.Provider.WorkContext;
 using Library.Business.ViewModel;
+using Library.Models.Roles;
 using Library.Models.Users;
 using Library.Services.User;
 
@@ -96,5 +97,13 @@ namespace Library.Business.Provider.User
             return _userService.GetUserById(userId);
         }
 
+        /// <summary>
+        /// Retrieves all the user roles.
+        /// </summary>
+        /// <returns>List of all the user roles.</returns>
+        public List<Roles> GetAllRoles()
+        {
+            return _userService.GetAllRoles();
+        }
     }
 }

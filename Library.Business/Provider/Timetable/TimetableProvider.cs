@@ -12,6 +12,10 @@ namespace Library.Business.Provider.Timetable
             _timetableService = timetableService;
         }
 
+        /// <summary>
+        /// Gets all the days of week.
+        /// </summary>
+        /// <returns>List of all the days of the week.</returns>
         public List<DaysOfWeek> GetDaysOfWeek()
         {
             return _timetableService.GetAllDaysOfWeek();

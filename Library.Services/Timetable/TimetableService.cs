@@ -13,6 +13,10 @@ namespace Library.Services
             _dapperService = dapperService;
         }
 
+        /// <summary>
+        /// Gets all the days of week.
+        /// </summary>
+        /// <returns>List of all the days of the week.</returns>
         public List<DaysOfWeek> GetAllDaysOfWeek()
         {
             var genres = _dapperService.Query<DaysOfWeek>(StoredProcedures.GetAllDaysOfWeek);

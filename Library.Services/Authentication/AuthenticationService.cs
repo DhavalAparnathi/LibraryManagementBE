@@ -1,4 +1,5 @@
-﻿using Library.Data.Repository;
+﻿using Dapper;
+using Library.Data.Repository;
 using Library.Models.Users;
 using Library.Utilities.Constants;
 using Microsoft.AspNetCore.Identity;
@@ -70,5 +71,31 @@ namespace Library.Services.Authentication
         //    return _dapperService.ExecuteScalar<bool>(StoredProcedures.IsEmailExists, param, CommandType.StoredProcedure);
         //}
 
+        /// <summary>
+        /// Method that resets user password based on confirmation of old password & new password.
+        /// </summary>
+        /// <returns>Resets the old password.</returns>
+        public void ResetPassword(int userId, string oldPassword, string newPassword)
+        {
+            var user = _dapperService.QueryFirstOrDefault<Users>(
+            StoredProcedures.GetUserById, new { Id = userId });
+
+            if (user == null || user.IsDeleted)
+                throw new Exception(Messages.User.UserNotFound);
+
+            var hasher = new PasswordHasher<string>();
+            var result = hasher.VerifyHashedPassword(null, user.PasswordHash, oldPassword);
+
+            if (result != PasswordVerificationResult.Success)
+                throw new Exception(Messages.Authentication.InvalidOldPassword);
+
+            var newHashedPassword = hasher.HashPassword(null, newPassword);
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", userId);
+            parameters.Add("PasswordHash", newHashedPassword);
+
+            _dapperService.Execute(StoredProcedures.ResetUserPassword, parameters);
+
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace Library.Services.Authentication
         /// </summary>
         //void Register(RegisterViewModel model);
 
+        void ResetPassword(int userId, string oldPassword, string newPassword);
     }
 }

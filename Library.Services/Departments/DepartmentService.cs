@@ -17,6 +17,12 @@ namespace Library.Services.Department
             _dapperService = dapperService;
         }
 
+        /// <summary>
+        /// Method that returns the Paginated list of All the departments with filter & sorting.
+        /// </summary>
+        /// <param name="model">Model type of Department list</param>
+        /// <param name="userId">Current user Id</param>
+        /// <returns>Paginated list of All the departments with filter & sorting.</returns>
         public (List<Library.Models.Departments.Departments>, int) GetDepartmentList(DepartmentList model, int userId)
         {
             var parameters = new DynamicParameters();
@@ -34,6 +40,11 @@ namespace Library.Services.Department
             return (departments, totalCount);
         }
 
+        /// <summary>
+        /// Deletes the department by Id.
+        /// </summary>
+        /// <param name="departmentId">Department Id which needed to be deleted</param>
+        /// <exception cref="DataValidationException">Custom exception.</exception>
         public void DeleteDepartmentById(int departmentId)
         {
             var parameters = new DynamicParameters();
@@ -53,6 +64,11 @@ namespace Library.Services.Department
             }
         }
 
+        /// <summary>
+        /// Upsert the department with the given input payload.
+        /// </summary>
+        /// <param name="model">Model class containing the payload keys</param>
+        /// <param name="currentUserId">Current userId</param>
         public void UpsertDepartment(DepartmentUpsertViewModel model, int currentUserId)
         {
             var parameters = new DynamicParameters();
@@ -64,6 +80,10 @@ namespace Library.Services.Department
             _dapperService.Execute(StoredProcedures.UpsertDepartment, parameters);
         }
 
+        /// <summary>
+        /// Gets the list of all the departments.
+        /// </summary>
+        /// <returns>List of all the departments.</returns>
         public List<DepartmentViewModel> GetAllDepartments()
         {
             var departments = _dapperService.Query<DepartmentViewModel>(

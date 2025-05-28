@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Library.Business.ViewModel;
 using Library.Data.Repository;
+using Library.Models.Roles;
 using Library.Models.Users;
 using Library.Utilities.Constants;
 using Microsoft.AspNetCore.Identity;
@@ -83,5 +84,16 @@ namespace Library.Services.User
             return _dapperService.QueryFirstOrDefault<Users>(StoredProcedures.GetUserById, param);
         }
 
+        /// <summary>
+        /// Retrieves the user roles.
+        /// </summary>
+        /// <returns>List of all user roles.</returns>
+        public List<Roles> GetAllRoles()
+        {
+            var roles = _dapperService.Query<Roles>(
+                StoredProcedures.GetAllRoles
+            );
+            return roles.ToList();
+        }
     }
 }

@@ -119,5 +119,23 @@ namespace Library.API.Controller
             }
         }
 
+        /// <summary>
+        /// Retrieves all the user roles
+        /// </summary>
+        /// <returns>List of all user roles</returns>
+        [Authorize(Roles = "Admin, HOD, Teacher, AssistantTeacher, Student")]
+        [HttpGet("get-all-roles")]
+        public BaseResponse GetAllRoles()
+        {
+            try
+            {
+                var roles = _userProvider.GetAllRoles();
+                return ApiSuccess(APIStatusCode.Ok, Messages.User.RolesFetchSuccess, roles);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

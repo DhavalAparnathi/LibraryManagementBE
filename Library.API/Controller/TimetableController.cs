@@ -18,7 +18,11 @@ namespace Library.API.Controller
             _timetableProvider = timetableProvider;
         }
 
-        [Authorize(Roles = "Admin, User")]
+        /// <summary>
+        /// Gets all the days of week.
+        /// </summary>
+        /// <returns>List of all the days of the week.</returns>
+        [Authorize(Roles = "Admin, Student")]
         [HttpGet("get-days-of-week")]
         public BaseResponse GetDaysOfWeekList()
         {

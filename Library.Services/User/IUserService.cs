@@ -1,4 +1,5 @@
 ﻿using Library.Business.ViewModel;
+using Library.Models.Roles;
 using Library.Models.Users;
 
 namespace Library.Services.User
@@ -24,5 +25,7 @@ namespace Library.Services.User
         /// Retrieves a user by their unique identifier.
         /// </summary>
         Users? GetUserById(int userId);
+
+        List<Roles> GetAllRoles();
     }
 }
