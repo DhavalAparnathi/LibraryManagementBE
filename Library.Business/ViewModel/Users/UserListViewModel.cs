@@ -17,4 +17,5 @@ namespace Library.Business.ViewModel
         public string Email { get; set; } = string.Empty;
 
     }
+
 }

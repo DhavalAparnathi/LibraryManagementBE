@@ -26,5 +26,18 @@ namespace Library.Business.Provider.WorkContext
                 return int.Parse(userIdClaim.Value);
             }
         }
+
+        public string CurrentUserRole
+        {
+            get
+            {
+                var roleClaim = _httpContextAccessor.HttpContext?.User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+
+                if (roleClaim == null) throw new UnauthorizedAccessException(Messages.Authentication.InvalidAuthentication);
+
+                return roleClaim.Value;
+            }
+        }
+
     }
 }

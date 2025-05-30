@@ -7,6 +7,7 @@
         public string SortColumn { get; set; } = string.Empty;
         public string SortDirection { get; set; } = string.Empty;
         public string DepartmentName { get; set; } = string.Empty;
+        public string HodUserName { get; set; } = string.Empty;
     }
 
 }

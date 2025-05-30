@@ -22,7 +22,6 @@ using Library.Services.Department;
 using Library.Business.Provider.Subject;
 using Library.Services.Subject;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container

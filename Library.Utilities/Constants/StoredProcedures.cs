@@ -7,6 +7,8 @@
 
         public static string GetAllRoles => "GetAllRoles";
 
+        public static string GetUsersByRole => "GetUsersByRole";
+
         public static string GetAllBooks => "GetAllBooks";
 
         public static string DeleteBookById => "DeleteBookById";
@@ -14,6 +16,8 @@
         public static string DeleteUserById => "DeleteUserById";
 
         public static string GetUserById => "GetUserById";
+
+        public static string GetDepartmentById => "GetDepartmentById";
 
         public static string UpsertBook => "UpsertBook";
 
@@ -49,6 +53,8 @@
 
         public static string GetAllSubjects => "GetAllSubjects";
 
+        public static string GetAllSubjectList => "GetAllSubjectList";
+
         public static string DeleteSubjectById => "DeleteSubjectById";
 
         public static string UpsertSubject => "UpsertSubject";
@@ -56,6 +62,14 @@
         public static string GetSubjectsByDepartment => "GetSubjectsByDepartment";
 
         public static string GetSubjectById => "GetSubjectById";
+
+        public static string CheckUserCreatedBy => "CheckUserCreatedBy";
+
+        public static string UpsertTimeTable => "UpsertTimeTable";
+
+        public static string DeleteTimeTableById => "DeleteTimeTableById";
+
+        public static string GetFullTimeTableByDepartmentId => "GetFullTimeTableByDepartmentId";
 
     }
 }

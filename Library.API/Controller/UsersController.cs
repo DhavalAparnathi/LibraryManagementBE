@@ -5,6 +5,7 @@ using Library.Utilities.ExceptionHandler;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using System.Security.Claims;
 using static Library.Utilities.Constants.Enums;
 
 namespace Library.API.Controller
@@ -50,7 +51,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="id">The ID of the user to delete.</param>
         /// <returns>Standardized response indicating success or failure of the operation.</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,HOD,Teacher")]
         [HttpDelete("{id}")]
         public BaseResponse DeleteUserById(int id)
         {
@@ -59,21 +60,34 @@ namespace Library.API.Controller
                 if (id <= 0)
                     throw new DataValidationException(Messages.User.InValidUserId);
 
-                _userProvider.DeleteUserById(id);
+                var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+                var currentUserIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(currentUserIdClaim) || !int.TryParse(currentUserIdClaim, out int currentUserId))
+                {
+                    throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+                }
+                _userProvider.DeleteUserById(id, currentUserId, currentUserRole);
                 return ApiSuccess(APIStatusCode.Ok, Messages.User.UserDeleteSuccess);
             }
-            catch
+            catch (UnauthorizedAccessException ex)
             {
-                throw;
+                return ApiError(APIStatusCode.AccessDenied, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return ApiError(APIStatusCode.ServerError, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Adds a new user or updates an existing one.
         /// </summary>
         /// <param name="model">User data for insert or update.</param>
         /// <returns>Standardized response indicating the result of the operation.</returns>
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,HOD,Teacher")]
         [HttpPost("upsert")]
         public BaseResponse UpsertUser([FromBody] UsersUpsertViewModel model)
         {
@@ -86,15 +100,20 @@ namespace Library.API.Controller
                 }
                 throw new DataValidationException(ModelState);
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                return ApiError(APIStatusCode.AccessDenied, ex.Message);
+            }
             catch (SqlException ex) when (ex.Message.Contains(Messages.Authentication.SameEmailAlreadyExist))
             {
                 return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                return ApiError(APIStatusCode.ServerError, ex.Message);
             }
         }
+
 
         /// <summary>
         /// Retrieves the details of a specific user by their ID.
@@ -137,5 +156,20 @@ namespace Library.API.Controller
                 throw;
             }
         }
+
+        //[Authorize(Roles = "Admin, HOD, Teacher")]
+        //[HttpGet("get-users-by-role/{roleId}")]
+        //public BaseResponse GetUsersByRole(int roleId)
+        //{
+        //    try
+        //    {
+        //        var users = _userProvider.GetUsersByRole(roleId);
+        //        return ApiSuccess(APIStatusCode.Ok, "Users fetched successfully.", users);
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
     }
 }

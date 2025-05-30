@@ -20,5 +20,13 @@
 
         public bool IsDeleted { get; set; } = false;
 
+        public DateTime JoinedDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public int CreatedBy { get; set; }
+
+        public int DepartmentId { get; set; }
+
     }
 }

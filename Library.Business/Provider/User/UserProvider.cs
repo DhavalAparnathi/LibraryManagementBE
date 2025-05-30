@@ -4,6 +4,7 @@ using Library.Business.ViewModel;
 using Library.Models.Roles;
 using Library.Models.Users;
 using Library.Services.User;
+using static Library.Utilities.Constants.Messages;
 
 namespace Library.Business.Provider.User
 {
@@ -66,13 +67,19 @@ namespace Library.Business.Provider.User
         /// </summary>
         /// <param name="userId">The ID of the user to delete.</param>
         /// <exception cref="ArgumentException">Thrown if the userId is invalid (less than or equal to zero).</exception>
-        public void DeleteUserById(int userId)
+        public void DeleteUserById(int userId, int currentUserId, string currentUserRole)
         {
             if (userId <= 0)
-                throw new ArgumentException("Invalid book ID.");
+                throw new ArgumentException("Invalid user ID.");
 
-            _userService.DeleteUserById(userId);
+            bool isAdmin = currentUserRole == "Admin";
+            bool isCreatedBy = _userService.IsCreatedBy(userId, currentUserId);
+            if (!isAdmin && !isCreatedBy)
+                throw new UnauthorizedAccessException("You are not authorized to delete this user.");
+
+            _userService.DeleteUserById(userId, currentUserId);
         }
+
 
         /// <summary>
         /// Creates a new user or updates an existing user.
@@ -84,7 +91,44 @@ namespace Library.Business.Provider.User
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
 
-            _userService.UpsertUser(model);
+            var currentUserId = _workContext.CurrentUserId;
+            var currentUserRole = _workContext.CurrentUserRole;
+
+            if (currentUserRole != Role.ADMIN)
+            {
+                if (currentUserRole == Role.HOD)
+                {
+                    if (!AllowedForHOD(model.RoleId))
+                        throw new UnauthorizedAccessException("HOD can only manage Teacher, Assistant Teacher, and Student.");
+
+                    if (model.Id > 0 && !_userService.IsCreatedBy(model.Id, currentUserId))
+                        throw new UnauthorizedAccessException("HOD can only edit/delete users they created.");
+                }
+                else if (currentUserRole == Role.TEACHER)
+                {
+                    if (!AllowedForTeacher(model.RoleId))
+                        throw new UnauthorizedAccessException("Teacher can only manage Assistant Teacher and Student.");
+
+                    if (model.Id > 0 && !_userService.IsCreatedBy(model.Id, currentUserId))
+                        throw new UnauthorizedAccessException("Teacher can only edit/delete users they created.");
+                }
+                else
+                {
+                    throw new UnauthorizedAccessException("Your role is not authorized to perform this action.");
+                }
+            }
+
+            _userService.UpsertUser(model, currentUserId);
+        }
+
+        private bool AllowedForHOD(int roleId)
+        {
+            return roleId == RoleIds.Teacher|| roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
+        }
+
+        private bool AllowedForTeacher(int roleId)
+        {
+            return roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
         }
 
         /// <summary>
@@ -105,5 +149,11 @@ namespace Library.Business.Provider.User
         {
             return _userService.GetAllRoles();
         }
+
+        public List<UserListViewModel> GetUsersByRole(int roleId)
+        {
+            return _userService.GetUsersByRole(roleId);
+        }
+
     }
 }

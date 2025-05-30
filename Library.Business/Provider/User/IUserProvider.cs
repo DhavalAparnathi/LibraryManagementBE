@@ -8,13 +8,15 @@ namespace Library.Business.Provider.User
     {
         PagedResult<UserViewModel> GetUserList(UserListVM model);
 
-        void DeleteUserById(int userId);
+        void DeleteUserById(int userId, int currentUserId, string currentUserRole);
 
         void UpsertUser(UsersUpsertViewModel model);
 
         Users? GetUserById(int userId);
 
         List<Roles> GetAllRoles();
+
+        List<UserListViewModel> GetUsersByRole(int roleId);
 
     }
 }

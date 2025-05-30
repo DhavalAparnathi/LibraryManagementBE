@@ -15,5 +15,7 @@ namespace Library.Business.Provider.Subject
 
         List<Subjects> GetSubjectsByDepartmentId(int departmentId);
 
+        PagedResult<SubjectViewModel> GetSubjectList(SubjectListViewModel model, int userId);
+
     }
 }

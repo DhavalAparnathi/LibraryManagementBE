@@ -15,5 +15,7 @@ namespace Library.Services.Subject
 
         List<Subjects> GetSubjectsByDepartmentId(int departmentId);
 
+        (List<Subjects>, int) GetSubjectList(SubjectList model);
+
     }
 }

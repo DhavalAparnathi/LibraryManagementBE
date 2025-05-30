@@ -5,6 +5,7 @@ using Library.Models.Roles;
 using Library.Models.Users;
 using Library.Utilities.Constants;
 using Microsoft.AspNetCore.Identity;
+using System.Data;
 
 namespace Library.Services.User
 {
@@ -41,10 +42,11 @@ namespace Library.Services.User
         /// Deletes a user by their unique identifier.
         /// </summary>
         /// <param name="userId">The ID of the user to delete.</param>
-        public void DeleteUserById(int userId)
+        public void DeleteUserById(int userId, int currentUserId)
         {
             var parameters = new DynamicParameters();
             parameters.Add("Id", userId);
+            parameters.Add("CurrentUserId", currentUserId);
 
             _dapperService.Execute(StoredProcedures.DeleteUserById, parameters);
         }
@@ -53,7 +55,7 @@ namespace Library.Services.User
         /// Inserts a new user or updates an existing user.
         /// </summary>
         /// <param name="model">The user data for insertion or update.</param>
-        public void UpsertUser(UsersUpsertViewModel model)
+        public void UpsertUser(UsersUpsertViewModel model, int currentUserId)
         {
             var parameters = new DynamicParameters();
 
@@ -69,6 +71,9 @@ namespace Library.Services.User
             parameters.Add("PasswordHash", hashedPassword);
             parameters.Add("RoleId", model.RoleId);
             parameters.Add("DepartmentId", model.DepartmentId);
+            if (model.Id == 0)
+                parameters.Add("CreatedBy", currentUserId);
+
 
             _dapperService.Execute(StoredProcedures.UpsertUser, parameters);
         }
@@ -95,5 +100,29 @@ namespace Library.Services.User
             );
             return roles.ToList();
         }
+
+        public bool IsCreatedBy(int userId, int creatorId)
+        {
+            var parameters = new { UserId = userId, CreatorId = creatorId };
+            return _dapperService.ExecuteScalar<bool>(
+                StoredProcedures.CheckUserCreatedBy, parameters, CommandType.StoredProcedure);
+        }
+
+        public List<UserListViewModel> GetUsersByRole(int roleId)
+        {
+            var users = _dapperService.Query<UserListViewModel>(
+                StoredProcedures.GetUsersByRole, new { RoleId = roleId });
+            return users.ToList();
+        }
+
+        //public string? GetUserNameById(int userId)
+        //{
+        //    var param = new { Id = userId };
+        //    var user = _dapperService.QueryFirstOrDefault<Users>(
+        //        StoredProcedures.GetUserById, param);
+
+        //    return user?.Username;
+        //}
+
     }
 }

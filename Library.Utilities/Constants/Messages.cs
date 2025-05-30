@@ -40,8 +40,11 @@
 
         public static class Role
         {
-            public static string USER = "User";
             public static string ADMIN = "Admin";
+            public static string HOD = "HOD";
+            public static string TEACHER = "Teacher";
+            public static string ASSISTANT_TEACHER = "AssistantTeacher";
+            public static string STUDENT = "Student";
         }
 
         public static class Department
@@ -67,5 +70,15 @@
             public const string SubjectFetchSuccess = "Subject fetched successfully.";
 
         }
+
+        public static class RoleIds
+        {
+            public const int Admin = 1;
+            public const int HOD = 2;
+            public const int Teacher = 3;
+            public const int AssistantTeacher = 4;
+            public const int Student = 5;
+        }
+
     }
 }

@@ -10,5 +10,7 @@ namespace Library.Services.Departments
         void UpsertDepartment(DepartmentUpsertViewModel model, int currentUserId);
 
         List<DepartmentViewModel> GetAllDepartments();
+
+        int? GetHodUserIdByDepartment(int departmentId);
     }
 }

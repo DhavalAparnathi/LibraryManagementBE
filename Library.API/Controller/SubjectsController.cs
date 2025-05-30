@@ -1,5 +1,7 @@
 ﻿using Library.Business.Provider.Subject;
+using Library.Business.Provider.WorkContext;
 using Library.Business.ViewModel;
+using Library.Models.Subjects;
 using Library.Utilities.Constants;
 using Library.Utilities.ExceptionHandler;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +15,12 @@ namespace Library.API.Controller
     public class SubjectsController : BaseController
     {
         private readonly ISubjectProvider _subjectProvider;
+        private readonly IWorkContext _workContext;
 
-        public SubjectsController(ISubjectProvider subjectProvider)
+        public SubjectsController(ISubjectProvider subjectProvider, IWorkContext workContext)
         {
             _subjectProvider = subjectProvider;
+            _workContext = workContext;
         }
 
         /// <summary>
@@ -31,6 +35,27 @@ namespace Library.API.Controller
             {
                 var departments = _subjectProvider.GetAllSubjects();
                 return ApiSuccess(APIStatusCode.Ok, Messages.Subject.SubjectListFetchSuccess, departments);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("list")]
+        public BaseResponse GetSubjectList([FromBody] SubjectListViewModel model)
+            {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    int currentUserId = _workContext.CurrentUserId;
+
+                    var pagedResult = _subjectProvider.GetSubjectList(model, currentUserId);
+                    return ApiSuccess(APIStatusCode.Ok, string.Empty, pagedResult);
+                }
+                throw new DataValidationException(ModelState);
             }
             catch
             {
@@ -126,7 +151,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="departmentId">Expected department's subject departmentId.</param>
         /// <returns>List of subjects for the Specific departmentId.</returns>
-        [Authorize]
+        [Authorize(Roles = "Admin, HOD")]
         [HttpGet("by-departmentId/{departmentId}")]
         public BaseResponse GetSubjectsByDepartmentId(int departmentId)
         {

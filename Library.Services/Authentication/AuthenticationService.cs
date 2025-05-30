@@ -77,8 +77,7 @@ namespace Library.Services.Authentication
         /// <returns>Resets the old password.</returns>
         public void ResetPassword(int userId, string oldPassword, string newPassword)
         {
-            var user = _dapperService.QueryFirstOrDefault<Users>(
-            StoredProcedures.GetUserById, new { Id = userId });
+            var user = _dapperService.QueryFirstOrDefault<Users>(StoredProcedures.GetUserById, new { Id = userId });
 
             if (user == null || user.IsDeleted)
                 throw new Exception(Messages.User.UserNotFound);

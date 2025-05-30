@@ -9,5 +9,7 @@
         public DateTime CreatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
+        public int HodUserId { get; set; }
+        public string HodUserName { get; set; } = string.Empty;
     }
 }

@@ -92,5 +92,24 @@ namespace Library.Services.Subject
 
             return _dapperService.Query<Subjects>(StoredProcedures.GetSubjectsByDepartment, parameters).ToList();
         }
+
+        public (List<Subjects>, int) GetSubjectList(SubjectList model)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("PageIndex", model.PageNumber);
+            parameters.Add("PageSize", model.PageSize);
+            parameters.Add("ColumnName", model.SortColumn);
+            //parameters.Add("ColumnName", string.IsNullOrWhiteSpace(model.SortColumn) ? "SubjectName" : model.SortColumn);
+            parameters.Add("SortDirection", model.SortDirection);
+            parameters.Add("SubjectName", model.SubjectName);
+            //parameters.Add("DepartmentId", model.DepartmentId);
+            parameters.Add("DepartmentId", model.DepartmentId == 0 ? null : model.DepartmentId);
+            parameters.Add("Year", model.Year);
+
+            var (subjects, totalCount) = _dapperService.QueryMultiple<Subjects, int>(StoredProcedures.GetAllSubjectList, parameters);
+
+            return (subjects, totalCount);
+        }
+
     }
 }

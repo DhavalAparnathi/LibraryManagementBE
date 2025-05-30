@@ -14,12 +14,12 @@ namespace Library.Services.User
         /// <summary>
         /// Deletes a user by their unique identifier.
         /// </summary>
-        void DeleteUserById(int userId);
+        void DeleteUserById(int userId, int currentUserId);
 
         /// <summary>
         /// Inserts a new user or updates an existing user.
         /// </summary>
-        void UpsertUser(UsersUpsertViewModel model);
+        void UpsertUser(UsersUpsertViewModel model, int currentUserId);
 
         /// <summary>
         /// Retrieves a user by their unique identifier.
@@ -27,5 +27,11 @@ namespace Library.Services.User
         Users? GetUserById(int userId);
 
         List<Roles> GetAllRoles();
+
+        bool IsCreatedBy(int userId, int creatorId);
+
+        List<UserListViewModel> GetUsersByRole(int roleId);
+
+        //string? GetUserNameById(int userId);
     }
 }

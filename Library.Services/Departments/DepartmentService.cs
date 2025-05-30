@@ -31,6 +31,7 @@ namespace Library.Services.Department
             parameters.Add("ColumnName", model.SortColumn);
             parameters.Add("SortDirection", model.SortDirection);
             parameters.Add("DepartmentName", model.DepartmentName);
+            parameters.Add("HodUserName", model.HodUserName);
             parameters.Add("UserId", userId);
 
             var (departments, totalCount) = _dapperService.QueryMultiple<Library.Models.Departments.Departments, int>(
@@ -91,5 +92,15 @@ namespace Library.Services.Department
             );
             return departments.ToList();
         }
+
+        public int? GetHodUserIdByDepartment(int departmentId)
+        {
+            var param = new { DepartmentId = departmentId };
+            var department = _dapperService.QueryFirstOrDefault<Library.Models.Departments.Departments>(
+                StoredProcedures.GetDepartmentById, param);
+
+            return department?.HodUserId;
+        }
+
     }
 }

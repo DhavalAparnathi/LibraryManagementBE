@@ -5,12 +5,14 @@ public class DepartmentViewModel
     public string DepartmentName { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public int? HodUserId { get; set; }
+    public string HodUserName { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
 }
 
 public class DepartmentListFilterViewModel
 {
     public string DepartmentName { get; set; } = string.Empty;
+    public string HodUserName { get; set; } = string.Empty;
 }
 
 public class DepartmentListViewModel

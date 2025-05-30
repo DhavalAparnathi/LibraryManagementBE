@@ -34,7 +34,8 @@ namespace Library.Business.Provider.Department
                 PageSize = model.PageSize,
                 SortColumn = model.SortColumn,
                 SortDirection = model.SortDirection,
-                DepartmentName = model.Filters.DepartmentName?.Trim()
+                DepartmentName = model.Filters.DepartmentName?.Trim(),
+                HodUserName = model.Filters.HodUserName?.Trim(),
             };
 
             var (departments, totalCount) = _departmentService.GetDepartmentList(requestModel, userId);
@@ -44,7 +45,9 @@ namespace Library.Business.Provider.Department
                 DepartmentId = d.DepartmentId,
                 DepartmentName = d.DepartmentName,
                 Description = d.Description,
-                CreatedDate = d.CreatedDate
+                CreatedDate = d.CreatedDate,
+                HodUserId = d.HodUserId,
+                HodUserName = d.HodUserName,
             }).ToList();
 
             return new PagedResult<DepartmentViewModel>

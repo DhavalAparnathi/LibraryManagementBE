@@ -76,5 +76,44 @@ namespace Library.Business.Provider.Subject
         {
             return _subjectService.GetSubjectsByDepartmentId(departmentId);
         }
+
+        public PagedResult<SubjectViewModel> GetSubjectList(SubjectListViewModel model, int userId)
+        {
+            if (userId <= 0)
+                throw new UnauthorizedAccessException();
+
+            var requestModel = new SubjectList
+            {
+                PageNumber = model.PageNumber,
+                PageSize = model.PageSize,
+                SortColumn = model.SortColumn,
+                SortDirection = model.SortDirection,
+                DepartmentId = model.Filters.DepartmentId,
+                SubjectName = model.Filters.SubjectName?.Trim(),
+                Year = model.Filters.Year
+            };
+
+            var (subjects, totalCount) = _subjectService.GetSubjectList(requestModel);
+
+            var subjectViewModels = subjects.Select(s => new SubjectViewModel
+            {
+                SubjectId = s.SubjectId,
+                SubjectName = s.SubjectName,
+                DepartmentId = s.DepartmentId,
+                DepartmentName = s.DepartmentName,
+                Year = s.Year
+            }).ToList();
+
+            return new PagedResult<SubjectViewModel>
+            {
+                Items = subjectViewModels,
+                PageNumber = model.PageNumber,
+                PageSize = model.PageSize,
+                TotalCount = totalCount,
+                SortColumn = model.SortColumn,
+                SortDirection = model.SortDirection
+            };
+        }
+
     }
 }
