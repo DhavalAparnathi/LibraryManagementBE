@@ -4,6 +4,7 @@ using Library.Business.ViewModel;
 using Library.Models.Roles;
 using Library.Models.Users;
 using Library.Services.User;
+using Library.Utilities.Constants;
 using static Library.Utilities.Constants.Messages;
 
 namespace Library.Business.Provider.User
@@ -70,12 +71,12 @@ namespace Library.Business.Provider.User
         public void DeleteUserById(int userId, int currentUserId, string currentUserRole)
         {
             if (userId <= 0)
-                throw new ArgumentException("Invalid user ID.");
+                throw new ArgumentException(Messages.User.InValidUserId);
 
-            bool isAdmin = currentUserRole == "Admin";
+            bool isAdmin = currentUserRole == Messages.Role.ADMIN;
             bool isCreatedBy = _userService.IsCreatedBy(userId, currentUserId);
             if (!isAdmin && !isCreatedBy)
-                throw new UnauthorizedAccessException("You are not authorized to delete this user.");
+                throw new UnauthorizedAccessException(Messages.User.NoAuthorizedToDelete);
 
             _userService.DeleteUserById(userId, currentUserId);
         }
@@ -99,33 +100,39 @@ namespace Library.Business.Provider.User
                 if (currentUserRole == Role.HOD)
                 {
                     if (!AllowedForHOD(model.RoleId))
-                        throw new UnauthorizedAccessException("HOD can only manage Teacher, Assistant Teacher, and Student.");
+                        throw new UnauthorizedAccessException(Messages.User.HODPermissions);
 
                     if (model.Id > 0 && !_userService.IsCreatedBy(model.Id, currentUserId))
-                        throw new UnauthorizedAccessException("HOD can only edit/delete users they created.");
+                        throw new UnauthorizedAccessException(Messages.User.HODNoPermission);
                 }
                 else if (currentUserRole == Role.TEACHER)
                 {
                     if (!AllowedForTeacher(model.RoleId))
-                        throw new UnauthorizedAccessException("Teacher can only manage Assistant Teacher and Student.");
+                        throw new UnauthorizedAccessException(Messages.User.TeacherPermissions);
 
                     if (model.Id > 0 && !_userService.IsCreatedBy(model.Id, currentUserId))
-                        throw new UnauthorizedAccessException("Teacher can only edit/delete users they created.");
+                        throw new UnauthorizedAccessException(Messages.User.TeacherNoPermission);
                 }
                 else
                 {
-                    throw new UnauthorizedAccessException("Your role is not authorized to perform this action.");
+                    throw new UnauthorizedAccessException(Messages.User.GeneralNoPermission);
                 }
             }
 
             _userService.UpsertUser(model, currentUserId);
         }
 
+        /// <summary>
+        /// Check for HOD's role access
+        /// </summary>
         private bool AllowedForHOD(int roleId)
         {
             return roleId == RoleIds.Teacher|| roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
         }
 
+        /// <summary>
+        /// Check for teacher's role access
+        /// </summary>
         private bool AllowedForTeacher(int roleId)
         {
             return roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
@@ -150,6 +157,11 @@ namespace Library.Business.Provider.User
             return _userService.GetAllRoles();
         }
 
+        /// <summary>
+        /// Gets the user details by given roleId
+        /// </summary>
+        /// <param name="roleId">RoleId of the user</param>
+        /// <returns>User details of given role</returns>
         public List<UserListViewModel> GetUsersByRole(int roleId)
         {
             return _userService.GetUsersByRole(roleId);

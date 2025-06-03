@@ -1,12 +1,6 @@
-﻿using Library.Business.ViewModel;
-using Library.Models.DaysOfWeek;
+﻿using Library.Models.DaysOfWeek;
 using Library.Models.TimeTables;
 using Library.Models.TImeTableSlots;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.Business.Provider
 {
@@ -19,5 +13,9 @@ namespace Library.Business.Provider
         void DeleteTimeTable(int timeTableId);
 
         IEnumerable<TimeTableSlotViewModel> GetDepartmentTimeTable(int departmentId);
+
+        Task<int> UpsertTimeTableWithSlotsAsync(TimeTableRequest request);
+
+        Task<bool> DeleteTimeTableAsync(int timeTableId);
     }
 }

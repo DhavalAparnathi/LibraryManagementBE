@@ -15,7 +15,7 @@
         public int PageSize { get; set; } = 10;
         public string SortColumn { get; set; } = string.Empty;
         public string SortDirection { get; set; } = string.Empty;
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
         public string SubjectName { get; set; } = string.Empty;
         public string Year { get; set; } = string.Empty;
         public string DepartmentName { get; set; } = string.Empty;

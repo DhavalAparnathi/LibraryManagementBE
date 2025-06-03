@@ -46,7 +46,6 @@ namespace Library.Services.User
         {
             var parameters = new DynamicParameters();
             parameters.Add("Id", userId);
-            parameters.Add("CurrentUserId", currentUserId);
 
             _dapperService.Execute(StoredProcedures.DeleteUserById, parameters);
         }
@@ -101,6 +100,12 @@ namespace Library.Services.User
             return roles.ToList();
         }
 
+        /// <summary>
+        /// Method that returns the CreatedBy user's Id.
+        /// </summary>
+        /// <param name="userId">Current user's Id</param>
+        /// <param name="creatorId">Record creator's Id</param>
+        /// <returns></returns>
         public bool IsCreatedBy(int userId, int creatorId)
         {
             var parameters = new { UserId = userId, CreatorId = creatorId };
@@ -108,21 +113,17 @@ namespace Library.Services.User
                 StoredProcedures.CheckUserCreatedBy, parameters, CommandType.StoredProcedure);
         }
 
+        /// <summary>
+        /// Method that returns the Users by given roleId.
+        /// </summary>
+        /// <param name="roleId">Role Id based on user data is fetched</param>
+        /// <returns>User data by RoleId</returns>
         public List<UserListViewModel> GetUsersByRole(int roleId)
         {
             var users = _dapperService.Query<UserListViewModel>(
                 StoredProcedures.GetUsersByRole, new { RoleId = roleId });
             return users.ToList();
         }
-
-        //public string? GetUserNameById(int userId)
-        //{
-        //    var param = new { Id = userId };
-        //    var user = _dapperService.QueryFirstOrDefault<Users>(
-        //        StoredProcedures.GetUserById, param);
-
-        //    return user?.Username;
-        //}
 
     }
 }

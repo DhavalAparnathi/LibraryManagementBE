@@ -14,7 +14,8 @@ namespace Library.Data.Repository
             _connString = connectionString;
         }
 
-        private IDbConnection CreateConnection() => new SqlConnection(_connString);
+        //private IDbConnection CreateConnection() => new SqlConnection(_connString);
+        private SqlConnection CreateConnection() => new SqlConnection(_connString);
 
         // Execute a command that returns a scalar (single value)
         // Returns the first column of the first row.
@@ -67,6 +68,14 @@ namespace Library.Data.Repository
             var firstResult = multi.Read<TFirst>().ToList();
             var secondResult = multi.Read<TSecond>().FirstOrDefault();
             return (firstResult, secondResult);
+        }
+
+        public async Task<int> ExecuteWithOutputAsync(string storedProcedure, DynamicParameters parameters, string outputParamName)
+        {
+            using var connection = CreateConnection();
+            await connection.OpenAsync();
+            await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+            return parameters.Get<int>(outputParamName);
         }
     }
 }

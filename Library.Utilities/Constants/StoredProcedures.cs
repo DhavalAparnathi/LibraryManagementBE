@@ -27,13 +27,7 @@
 
         public static string ReturnBook => "ReturnBook";
 
-        public static string GetUserByEmail => "GetUserByEmail";
-
-        public static string RegisterUser => "RegisterUser";
-
         public static string GetIssuedBooksByUserId => "GetIssuedBooksByUserId";
-
-        public static string IsEmailExists => "IsEmailExists";
 
         public static string GetAllGenres => "GetAllGenres";
 
@@ -68,6 +62,18 @@
         public static string UpsertTimeTable => "UpsertTimeTable";
 
         public static string DeleteTimeTableById => "DeleteTimeTableById";
+
+        public static string DeleteTimeTable => "DeleteTimeTable";
+
+        public static string UpsertTimeTableWithSlots => "UpsertTimeTableWithSlots";
+
+        public static string TimeTableSlotType => "TimeTableSlotType";
+
+        public static string MarkAttendance => "MarkAttendance";
+
+        public static string ApproveAttendance => "ApproveAttendance";
+
+        public static string RejectAttendance => "RejectAttendance";
 
         public static string GetFullTimeTableByDepartmentId => "GetFullTimeTableByDepartmentId";
 

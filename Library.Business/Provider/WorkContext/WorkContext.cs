@@ -27,6 +27,9 @@ namespace Library.Business.Provider.WorkContext
             }
         }
 
+        /// <summary>
+        /// Gets the currently authenticated user's Role from the JWT claims.
+        /// </summary>
         public string CurrentUserRole
         {
             get

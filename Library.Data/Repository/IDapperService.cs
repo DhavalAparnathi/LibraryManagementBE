@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace Library.Data.Repository
         T? QueryFirstOrDefault<T>(string storedProcedure, object? parameters = null) where T : class;
         T ExecuteScalar<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text);
         (List<TFirst> FirstResult, TSecond SecondResult) QueryMultiple<TFirst, TSecond>(string storedProcedure, object? parameters = null) where TFirst : class;
+        Task<int> ExecuteWithOutputAsync(string storedProcedure, DynamicParameters parameters, string outputParamName);
     }
 }

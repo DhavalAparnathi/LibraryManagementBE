@@ -34,7 +34,7 @@ namespace Library.API.Controller
             try
             {
                 var genres = _timetableProvider.GetDaysOfWeek();
-                return ApiSuccess(APIStatusCode.Ok, Messages.Book.GenreListSuccess, genres);
+                return ApiSuccess(APIStatusCode.Ok, Messages.Timetable.DaysOfWeekFetchSuccess, genres);
             }
             catch
             {
@@ -53,7 +53,7 @@ namespace Library.API.Controller
                     int currentUserId = _workContext.CurrentUserId;
 
                     _timetableProvider.UpsertTimeTable(model, currentUserId);
-                    return ApiSuccess(APIStatusCode.Ok, "Timetable saved successfully.");
+                    return ApiSuccess(APIStatusCode.Ok, Messages.Timetable.TimetableSavedSuccess);
                 }
                 throw new DataValidationException(ModelState);
             }
@@ -70,11 +70,11 @@ namespace Library.API.Controller
             try
             {
                 _timetableProvider.DeleteTimeTable(timeTableId);
-                return Ok(new { Message = "TimeTable deleted successfully." });
+                return Ok(new { Message = Messages.Timetable.TimetableDeleteSuccess });
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(500, new { Message = $"Error deleting timetable: {ex.Message}" });
+                throw;
             }
         }
 
@@ -86,9 +86,46 @@ namespace Library.API.Controller
                 var timetable = _timetableProvider.GetDepartmentTimeTable(departmentId);
                 return Ok(timetable);
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(500, new { Message = $"Error retrieving timetable: {ex.Message}" });
+                throw;
+            }
+        }
+
+        [HttpPost("upsert-timetable")]
+        public async Task<IActionResult> UpsertTimeTable([FromBody] TimeTableRequest request)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var timeTableId = await _timetableProvider.UpsertTimeTableWithSlotsAsync(request);
+                    return Ok(new { TimeTableId = timeTableId });
+                }
+                throw new DataValidationException(ModelState);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpDelete("async/{timeTableId:int}")]
+        public async Task<IActionResult> DeleteTimeTableAsync(int timeTableId)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var deleted = await _timetableProvider.DeleteTimeTableAsync(timeTableId);
+                    if (deleted) return Ok(new { Message = Messages.Timetable.TimetableDeleteSuccess });
+                    return NotFound(new { Message = Messages.Timetable.TimetableNotFound });
+                }
+                throw new DataValidationException(ModelState);
+            }
+            catch
+            {
+                throw;
             }
         }
     }

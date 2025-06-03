@@ -77,6 +77,12 @@ namespace Library.Business.Provider.Subject
             return _subjectService.GetSubjectsByDepartmentId(departmentId);
         }
 
+        /// <summary>
+        /// Method that retrieves the list of subjects.
+        /// </summary>
+        /// <param name="model">model parameter of type SubjectListViewModel</param>
+        /// <param name="userId">Current userId</param>
+        /// <returns>A list of subjects</returns>
         public PagedResult<SubjectViewModel> GetSubjectList(SubjectListViewModel model, int userId)
         {
             if (userId <= 0)
@@ -88,7 +94,7 @@ namespace Library.Business.Provider.Subject
                 PageSize = model.PageSize,
                 SortColumn = model.SortColumn,
                 SortDirection = model.SortDirection,
-                DepartmentId = model.Filters.DepartmentId,
+                DepartmentId = model.Filters.DepartmentId == 0 ? null : model.Filters.DepartmentId,
                 SubjectName = model.Filters.SubjectName?.Trim(),
                 Year = model.Filters.Year
             };

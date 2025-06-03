@@ -93,21 +93,29 @@ namespace Library.Services.Subject
             return _dapperService.Query<Subjects>(StoredProcedures.GetSubjectsByDepartment, parameters).ToList();
         }
 
+        /// <summary>
+        /// Method that retrieves the list of subjects.
+        /// </summary>
+        /// <param name="model">model parameter of type SubjectListViewModel</param>
+        /// <returns>A list of subjects</returns>
         public (List<Subjects>, int) GetSubjectList(SubjectList model)
         {
             var parameters = new DynamicParameters();
             parameters.Add("PageIndex", model.PageNumber);
             parameters.Add("PageSize", model.PageSize);
-            parameters.Add("ColumnName", model.SortColumn);
-            //parameters.Add("ColumnName", string.IsNullOrWhiteSpace(model.SortColumn) ? "SubjectName" : model.SortColumn);
-            parameters.Add("SortDirection", model.SortDirection);
-            parameters.Add("SubjectName", model.SubjectName);
-            //parameters.Add("DepartmentId", model.DepartmentId);
-            parameters.Add("DepartmentId", model.DepartmentId == 0 ? null : model.DepartmentId);
-            parameters.Add("Year", model.Year);
+            parameters.Add("ColumnName", string.IsNullOrWhiteSpace(model.SortColumn) ? "SubjectName" : model.SortColumn);
+            parameters.Add("SortDirection", string.IsNullOrWhiteSpace(model.SortDirection) ? "ASC" : model.SortDirection);
+            parameters.Add("SubjectName", string.IsNullOrWhiteSpace(model.SubjectName) ? null : model.SubjectName);
+            parameters.Add("DepartmentId", model.DepartmentId);
+
+            int? yearInt = null;
+            if (!string.IsNullOrWhiteSpace(model.Year) && int.TryParse(model.Year, out int parsedYear))
+            {
+                yearInt = parsedYear;
+            }
+            parameters.Add("Year", yearInt);
 
             var (subjects, totalCount) = _dapperService.QueryMultiple<Subjects, int>(StoredProcedures.GetAllSubjectList, parameters);
-
             return (subjects, totalCount);
         }
 

@@ -1,4 +1,5 @@
 ﻿using Library.Models.Departments;
+
 namespace Library.Services.Departments
 {
     public interface IDepartmentService

@@ -28,7 +28,7 @@ namespace Library.API.Controller
         /// <returns>Standardized response containing the paginated user list.</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost("list")]
-        public BaseResponse GetUserList([FromBody]UserListVM model)
+        public BaseResponse GetUserList([FromBody] UserListVM model)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Library.API.Controller
 
                 if (string.IsNullOrEmpty(currentUserIdClaim) || !int.TryParse(currentUserIdClaim, out int currentUserId))
                 {
-                    throw new UnauthorizedAccessException("Invalid or missing user ID in token.");
+                    throw new UnauthorizedAccessException(Messages.User.MissingUserId);
                 }
                 _userProvider.DeleteUserById(id, currentUserId, currentUserRole);
                 return ApiSuccess(APIStatusCode.Ok, Messages.User.UserDeleteSuccess);
@@ -108,6 +108,10 @@ namespace Library.API.Controller
             {
                 return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
             }
+            catch (SqlException ex) when (ex.Message.Contains(Messages.User.AlreadyHasHOD))
+            {
+                return ApiError(APIStatusCode.Conflict, Messages.User.AlreadyHasHOD);
+            }
             catch (Exception ex)
             {
                 return ApiError(APIStatusCode.ServerError, ex.Message);
@@ -149,7 +153,7 @@ namespace Library.API.Controller
             try
             {
                 var roles = _userProvider.GetAllRoles();
-                return ApiSuccess(APIStatusCode.Ok, Messages.User.RolesFetchSuccess, roles);
+                return ApiSuccess(APIStatusCode.Ok, Messages.User.UserFetchedSuccess, roles);
             }
             catch
             {
@@ -157,19 +161,19 @@ namespace Library.API.Controller
             }
         }
 
-        //[Authorize(Roles = "Admin, HOD, Teacher")]
-        //[HttpGet("get-users-by-role/{roleId}")]
-        //public BaseResponse GetUsersByRole(int roleId)
-        //{
-        //    try
-        //    {
-        //        var users = _userProvider.GetUsersByRole(roleId);
-        //        return ApiSuccess(APIStatusCode.Ok, "Users fetched successfully.", users);
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
+        [Authorize(Roles = "Admin, HOD, Teacher")]
+        [HttpGet("get-users-by-role/{roleId}")]
+        public BaseResponse GetUsersByRole(int roleId)
+        {
+            try
+            {
+                var users = _userProvider.GetUsersByRole(roleId);
+                return ApiSuccess(APIStatusCode.Ok, Messages.User.UserFetchedSuccess, users);
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

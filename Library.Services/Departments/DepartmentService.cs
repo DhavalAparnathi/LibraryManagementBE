@@ -93,6 +93,11 @@ namespace Library.Services.Department
             return departments.ToList();
         }
 
+        /// <summary>
+        /// Gets the HodUserId by departmentId
+        /// </summary>
+        /// <param name="departmentId">DepartmentId</param>
+        /// <returns>UserHodId of the specified department</returns>
         public int? GetHodUserIdByDepartment(int departmentId)
         {
             var param = new { DepartmentId = departmentId };

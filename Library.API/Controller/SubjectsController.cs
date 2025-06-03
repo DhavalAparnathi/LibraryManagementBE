@@ -42,6 +42,11 @@ namespace Library.API.Controller
             }
         }
 
+        /// <summary>
+        /// Method that retrieves the list of subjects.
+        /// </summary>
+        /// <param name="model">model parameter of type SubjectListViewModel</param>
+        /// <returns>A list of subjects</returns>
         [Authorize(Roles = "Admin")]
         [HttpPost("list")]
         public BaseResponse GetSubjectList([FromBody] SubjectListViewModel model)

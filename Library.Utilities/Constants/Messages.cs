@@ -13,6 +13,13 @@
             public static string InvalidOldPassword = "Old Password is invalid.";
         }
 
+        public static class Attendance
+        {
+            public const string AttendanceMarked = "Attendance marked successfully.";
+            public const string AttendanceApproved = "Attendance approved successfully.";
+            public const string AttendanceRejected = "Attendance rejected successfully.";
+        }
+
         public static class Book
         {
             public static string InValidBookId = "Invalid book ID.";
@@ -23,8 +30,8 @@
             public static string BookIssuedSuccess = "Book issued successfully.";
             public static string BookReturnedSuccess = "Book returned successfully.";
             public static string GenreListSuccess = "Genre list retrieved successfully.";
-            public static string BookDeleteError = "Cannot delete the book because it is currently issued to a user.";
-            public static string BookDeleteSqlError = "Cannot delete the book as it has active borrow records.";
+            public static string BookDeleteError = "Can not delete the book because it is currently issued to a user.";
+            public static string BookDeleteSqlError = "Can not delete the book as it has active borrow records.";
         }
 
         public static class User
@@ -36,15 +43,14 @@
             public static string UserFetchedSuccess = "User fetched successfully.";
             public static string UserNotFound = "User not found.";
             public static string RolesFetchSuccess = "Roles fetched successfully.";
-        }
-
-        public static class Role
-        {
-            public static string ADMIN = "Admin";
-            public static string HOD = "HOD";
-            public static string TEACHER = "Teacher";
-            public static string ASSISTANT_TEACHER = "AssistantTeacher";
-            public static string STUDENT = "Student";
+            public static string MissingUserId = "Invalid or missing user Id in token.";
+            public static string AlreadyHasHOD = "This department already has a HOD assigned.";
+            public static string NoAuthorizedToDelete = "You are not authorized to delete this user.";
+            public static string HODPermissions = "HOD can only manage Teacher, Assistant Teacher, and Student.";
+            public static string HODNoPermission = "HOD can only edit/delete users they created.";
+            public static string TeacherPermissions = "Teacher can only manage Assistant Teacher and Student.";
+            public static string TeacherNoPermission = "Teacher can only edit/delete users they created.";
+            public static string GeneralNoPermission = "Your role is not authorized to perform this action.";
         }
 
         public static class Department
@@ -68,7 +74,24 @@
             public const string SubjectDeleteSqlError = "Error in deleting subject.";
             public const string SubjectDeleteError = "Subject delete error.";
             public const string SubjectFetchSuccess = "Subject fetched successfully.";
+        }
 
+        public static class Timetable
+        {
+            public const string DaysOfWeekFetchSuccess = "Days of week saved successfully.";
+            public const string TimetableSavedSuccess = "Timetable saved successfully.";
+            public const string TimetableDeleteSuccess = "TimeTable deleted successfully.";
+            public const string TimetableNotFound = "Timetable not found.";
+            public const string UnauthorizedToManageDepartment = "You are not authorized to manage this department's timetable.";
+        }
+
+        public static class Role
+        {
+            public static string ADMIN = "Admin";
+            public static string HOD = "HOD";
+            public static string TEACHER = "Teacher";
+            public static string ASSISTANT_TEACHER = "AssistantTeacher";
+            public static string STUDENT = "Student";
         }
 
         public static class RoleIds

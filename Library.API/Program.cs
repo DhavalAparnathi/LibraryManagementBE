@@ -21,6 +21,8 @@ using Library.Services.Departments;
 using Library.Services.Department;
 using Library.Business.Provider.Subject;
 using Library.Services.Subject;
+using Library.Business.Provider.Attendance;
+using Library.Services.Attendance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +72,7 @@ builder.Services.AddScoped<IUserProvider, UserProvider>();
 builder.Services.AddScoped<IDepartmentProvider, DepartmentProvider>();
 builder.Services.AddScoped<ISubjectProvider, SubjectProvider>();
 builder.Services.AddScoped<ITimetableProvider, TimetableProvider>();
+builder.Services.AddScoped<IAttendanceProvider, AttendanceProvider>();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IBookService, BookService>();
@@ -78,6 +81,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ITimetableService, TimetableService>();
+builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IJwtTokenHelper, JwtTokenHelper>();
 
 builder.Services.AddHttpClient();
@@ -115,7 +119,6 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
-
 
 var app = builder.Build();
 

@@ -32,6 +32,5 @@ namespace Library.Services.User
 
         List<UserListViewModel> GetUsersByRole(int roleId);
 
-        //string? GetUserNameById(int userId);
     }
 }

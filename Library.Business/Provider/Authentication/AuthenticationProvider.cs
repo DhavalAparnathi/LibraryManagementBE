@@ -1,6 +1,7 @@
 ﻿using Library.Business.ViewModel.Authentication;
 using Library.Services.JwtToken;
-using Library.Services.Authentication;using Library.Utilities.Constants;
+using Library.Services.Authentication;
+using Library.Utilities.Constants;
 
 namespace Library.Business.Provider.Authentication
 {
@@ -23,7 +24,7 @@ namespace Library.Business.Provider.Authentication
         /// <exception cref="UnauthorizedAccessException"></exception>
         public AuthResponseViewModel Login(AuthenticationViewModel model)
         {
-            // Validate the user by id pass whether exist in DB or not
+            // Validate the user by id
             var user = _authService.ValidateUser(model.Email, model.Password);
 
             if (user == null || !user.IsActive)
@@ -42,19 +43,6 @@ namespace Library.Business.Provider.Authentication
                 Token = token
             };
         }
-
-        /// <summary>
-        /// Register method that takes user input values & creates a user with entered data.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        //public void Register(RegisterViewModel model)
-        //{
-        //    if (model == null)
-        //        throw new ArgumentNullException(nameof(model));
-
-        //    _authService.Register(model);
-        //}
 
         /// <summary>
         /// Method that resets user password based on confirmation of old password & new password.

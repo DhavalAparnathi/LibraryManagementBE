@@ -45,35 +45,6 @@ namespace Library.API.Controller
         }
 
         /// <summary>
-        /// Register method that takes user input values & returns success response & creates a user with entered data
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>Returns success response & creates a user</returns>
-        //[AllowAnonymous]
-        //[HttpPost("register")]
-        //public BaseResponse RegisterUser([FromBody] RegisterViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            _authProvider.Register(model);
-        //            return ApiSuccess(APIStatusCode.Ok, Messages.Authentication.RegisteredSuccessfully);
-        //        }
-
-        //        throw new DataValidationException(ModelState);
-        //    }
-        //    catch (SqlException ex) when (ex.Message.Contains(Messages.Authentication.SameEmailAlreadyExist))
-        //    {
-        //        return ApiError(APIStatusCode.Conflict, Messages.Authentication.SameEmailAlreadyExist);
-        //    }
-        //    catch 
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        /// <summary>
         /// Method that resets user password based on confirmation of old password & new password.
         /// </summary>
         /// <returns>Generates a new password.</returns>
