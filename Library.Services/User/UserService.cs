@@ -32,6 +32,8 @@ namespace Library.Services.User
             parameters.Add("SortDirection", model.SortDirection);
             parameters.Add("UserName", model.UserName);
             parameters.Add("Email", model.Email);
+            parameters.Add("CurrentUserRole", model.CurrentUserRole);
+            parameters.Add("DepartmentId", model.DepartmentId);
 
             var (users, totalCount) = _dapperService.QueryMultiple<UserWithStats, int>(StoredProcedures.GetAllUsers, parameters);
 

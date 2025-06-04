@@ -9,4 +9,17 @@
         public DateTime CreatedDate { get; set; }
 
     }
+
+    public class StudentDto
+    {
+        public int StudentId { get; set; }
+        public string StudentName { get; set; } = string.Empty;
+    }
+
+    public class SubjectDto
+    {
+        public int SubjectId { get; set; }
+        public string SubjectName { get; set; } = string.Empty;
+    }
+
 }

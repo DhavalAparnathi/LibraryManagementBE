@@ -26,4 +26,11 @@
         public int RejectedBy { get; set; }
         public string Reason { get; set; } = string.Empty;   
     }
+
+    public class LeaveRequestModel
+    {
+        public int SubjectId { get; set; }
+        public DateTime Date { get; set; }
+        public string Reason { get; set; } = string.Empty;
+    }
 }

@@ -35,6 +35,7 @@ namespace Library.Services.JwtToken
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, user.RoleName),
+                new Claim("DepartmentId", user.DepartmentId.ToString() ?? string.Empty)
             };
 
             // Create the signing credentials using the secret key and algorithm

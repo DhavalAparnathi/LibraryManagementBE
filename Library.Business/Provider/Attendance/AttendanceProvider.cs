@@ -42,5 +42,10 @@ namespace Library.Business.Provider.Attendance
             await _attendanceService.RejectAttendanceAsync(request);
         }
 
+        public async Task ApplyStudentLeaveAsync(int studentId, LeaveRequestModel model)
+        {
+            await _attendanceService.ApplyStudentLeaveAsync(studentId, model.SubjectId, model.Date, model.Reason);
+
+        }
     }
 }

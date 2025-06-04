@@ -17,5 +17,6 @@ namespace Library.Data.Repository
         T ExecuteScalar<T>(string sql, object? parameters = null, CommandType commandType = CommandType.Text);
         (List<TFirst> FirstResult, TSecond SecondResult) QueryMultiple<TFirst, TSecond>(string storedProcedure, object? parameters = null) where TFirst : class;
         Task<int> ExecuteWithOutputAsync(string storedProcedure, DynamicParameters parameters, string outputParamName);
+        Task<int> ExecuteAsync(string storedProcedure, DynamicParameters parameters, CommandType commandType = CommandType.StoredProcedure);
     }
 }

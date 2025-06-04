@@ -127,5 +127,21 @@ namespace Library.API.Controller
                 throw;
             }
         }
+
+        [HttpGet("{departmentId}/students-subjects")]
+        public async Task<IActionResult> GetStudentsAndSubjectsByDepartment(int departmentId)
+        {
+            var (students, subject) = await _departmentProvider.GetStudentsAndSubjectsByDepartmentAsync(departmentId);
+
+            // Return object with both properties
+            var response = new
+            {
+                Students = students,
+                Subjects = new List<SubjectDto> { subject }  // Wrapping single SubjectDto into a list for consistency with frontend expectations
+            };
+
+            return Ok(response);
+        }
+
     }
 }

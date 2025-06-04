@@ -13,5 +13,9 @@ namespace Library.Services.Departments
         List<DepartmentViewModel> GetAllDepartments();
 
         int? GetHodUserIdByDepartment(int departmentId);
+
+        //Task<(List<StudentDto> Students, List<SubjectDto> Subjects)> GetStudentsAndSubjectsByDepartmentAsync(int departmentId);
+        (List<StudentDto>, SubjectDto) GetStudentsAndSubjectsByDepartment(int departmentId);
+
     }
 }

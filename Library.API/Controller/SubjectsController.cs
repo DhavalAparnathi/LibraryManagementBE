@@ -47,7 +47,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="model">model parameter of type SubjectListViewModel</param>
         /// <returns>A list of subjects</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, HOD")]
         [HttpPost("list")]
         public BaseResponse GetSubjectList([FromBody] SubjectListViewModel model)
             {
@@ -73,7 +73,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="model">model type of SubjectUpsertViewModel</param>
         /// <returns>Success response with the newly generated subjectId.</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, HOD")]
         [HttpPost("upsert")]
         public BaseResponse UpsertSubject([FromBody] SubjectUpsertViewModel model)
         {
@@ -98,7 +98,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="subjectId">SubjectId which needed to be deleted.</param>
         /// <returns>Success or exception message.</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, HOD")]
         [HttpDelete("{subjectId}")]
         public IActionResult DeleteSubjectById(int subjectId)
         {
@@ -133,7 +133,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="subjectId">Subject Id of which data is fetching.</param>
         /// <returns>Subject data with appropriate response message.</returns>
-        [Authorize]
+        [Authorize(Roles = "Admin, HOD")]
         [HttpGet("subject-by-Id/{subjectId}")]
         public BaseResponse GetSubjectById(int subjectId)
         {

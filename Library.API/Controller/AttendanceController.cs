@@ -1,7 +1,9 @@
 ﻿using Library.Business.Provider.Attendance;
+using Library.Business.Provider.WorkContext;
 using Library.Models.Attendance;
 using Library.Utilities.Constants;
 using Library.Utilities.ExceptionHandler;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controller
@@ -11,10 +13,12 @@ namespace Library.API.Controller
     public class AttendanceController : BaseController
     {
         private readonly IAttendanceProvider _attendanceProvider;
+        private readonly IWorkContext _workContext;
 
-        public AttendanceController(IAttendanceProvider attendanceProvider)
+        public AttendanceController(IAttendanceProvider attendanceProvider, IWorkContext workContext)
         {
             _attendanceProvider = attendanceProvider;
+            _workContext = workContext;
         }
 
         /// <summary>
@@ -57,7 +61,7 @@ namespace Library.API.Controller
                 }
                 throw new DataValidationException(ModelState);
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -83,6 +87,26 @@ namespace Library.API.Controller
             catch
             {
                 throw;
+            }
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpPost("apply-leave")]
+        public async Task<IActionResult> ApplyLeave([FromBody] LeaveRequestModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var studentId = _workContext.CurrentUserId;
+                    await _attendanceProvider.ApplyStudentLeaveAsync(studentId, model);
+                    return Ok(new { message = "Leave applied successfully." });
+                }
+                return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }

@@ -77,5 +77,13 @@ namespace Library.Data.Repository
             await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
             return parameters.Get<int>(outputParamName);
         }
+
+        public async Task<int> ExecuteAsync(string storedProcedure, DynamicParameters parameters, CommandType commandType = CommandType.StoredProcedure)
+        {
+            using var connection = new SqlConnection(_connString);
+            await connection.OpenAsync();
+            return await connection.ExecuteAsync(storedProcedure, parameters, commandType: commandType);
+        }
+
     }
 }

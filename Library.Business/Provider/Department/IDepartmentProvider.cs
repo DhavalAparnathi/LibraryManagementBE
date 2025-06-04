@@ -9,5 +9,6 @@ namespace Library.Business.Provider.Department
         void DeleteDepartmentById(int departmentId);
         void UpsertDepartment(DepartmentUpsertViewModel model);
         List<DepartmentViewModel> GetAllDepartments();
+        Task<(List<StudentDto> Students, SubjectDto Subject)> GetStudentsAndSubjectsByDepartmentAsync(int departmentId);
     }
 }

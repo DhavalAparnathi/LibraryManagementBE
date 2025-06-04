@@ -42,5 +42,18 @@ namespace Library.Business.Provider.WorkContext
             }
         }
 
+        public int? CurrentDepartmentId
+        {
+            get
+            {
+                var deptClaim = _httpContextAccessor.HttpContext?.User?.Claims
+                    .FirstOrDefault(c => c.Type == "DepartmentId");
+                if (deptClaim == null || string.IsNullOrEmpty(deptClaim.Value))
+                    return null;
+
+                return int.TryParse(deptClaim.Value, out int deptId) ? deptId : null;
+            }
+        }
+
     }
 }

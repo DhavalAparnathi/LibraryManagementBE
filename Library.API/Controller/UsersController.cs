@@ -26,7 +26,7 @@ namespace Library.API.Controller
         /// </summary>
         /// <param name="model">User list filter and pagination view model.</param>
         /// <returns>Standardized response containing the paginated user list.</returns>
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, HOD, Teacher, Assistant Teacher, Student")]
         [HttpPost("list")]
         public BaseResponse GetUserList([FromBody] UserListVM model)
         {

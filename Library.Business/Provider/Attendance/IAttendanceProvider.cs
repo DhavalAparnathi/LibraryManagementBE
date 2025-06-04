@@ -9,5 +9,7 @@ namespace Library.Business.Provider.Attendance
         Task ApproveAttendanceAsync(ApproveAttendanceRequest request);
 
         Task RejectAttendanceAsync(RejectAttendanceRequest request);
+
+        Task ApplyStudentLeaveAsync(int studentId, LeaveRequestModel model);
     }
 }

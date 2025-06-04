@@ -10,5 +10,6 @@ namespace Library.Services.Attendance
 
         Task RejectAttendanceAsync(RejectAttendanceRequest request);
 
+        Task ApplyStudentLeaveAsync(int studentId, int subjectId, DateTime date, string reason);
     }
 }

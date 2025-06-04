@@ -107,5 +107,18 @@ namespace Library.Services.Department
             return department?.HodUserId;
         }
 
+        public (List<StudentDto>, SubjectDto) GetStudentsAndSubjectsByDepartment(int departmentId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("DepartmentId", departmentId);
+
+            var (studentsEnumerable, subjectSingle) = _dapperService.QueryMultiple<StudentDto, SubjectDto>(
+                "GetStudentsAndSubjectsByDepartmentId", parameters);
+
+            return (studentsEnumerable, subjectSingle);
+        }
+
+
+
     }
 }

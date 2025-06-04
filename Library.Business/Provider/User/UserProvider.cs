@@ -31,6 +31,9 @@ namespace Library.Business.Provider.User
             try
             {
                 var currentUserId = _workContext.CurrentUserId;
+                var currentUserRole = _workContext.CurrentUserRole; 
+                var departmentId = _workContext.CurrentDepartmentId; 
+
                 var requestModel = new UserList
                 {
                     PageNumber = model.PageNumber,
@@ -38,16 +41,17 @@ namespace Library.Business.Provider.User
                     SortColumn = model.SortColumn,
                     SortDirection = model.SortDirection,
                     UserName = model.Filters.UserName?.Trim(),
-                    Email = model.Filters.Email?.Trim()
+                    Email = model.Filters.Email?.Trim(),
+                    CurrentUserRole = currentUserRole,
+                    DepartmentId = departmentId
                 };
 
                 var (users, totalCount) = _userService.GetUserList(requestModel);
-
                 var userViewModels = users.ToModelList<UserViewModel, UserWithStats>();
-
                 var pageCount = (int)Math.Ceiling((double)totalCount / requestModel.PageSize);
 
                 return new PagedResult<UserViewModel>
+
                 {
                     Items = userViewModels,
                     PageNumber = model.PageNumber,
@@ -61,6 +65,7 @@ namespace Library.Business.Provider.User
             {
                 throw;
             }
+
         }
 
         /// <summary>
@@ -127,7 +132,7 @@ namespace Library.Business.Provider.User
         /// </summary>
         private bool AllowedForHOD(int roleId)
         {
-            return roleId == RoleIds.Teacher|| roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
+            return roleId == RoleIds.Teacher || roleId == RoleIds.AssistantTeacher || roleId == RoleIds.Student;
         }
 
         /// <summary>

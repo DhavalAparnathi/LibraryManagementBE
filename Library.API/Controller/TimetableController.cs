@@ -27,7 +27,7 @@ namespace Library.API.Controller
         /// Gets all the days of week.
         /// </summary>
         /// <returns>List of all the days of the week.</returns>
-        [Authorize(Roles = "Admin, Student")]
+        [Authorize(Roles = "Admin, HOD,Teacher, Assistant Teacher, Student")]
         [HttpGet("get-days-of-week")]
         public BaseResponse GetDaysOfWeekList()
         {
@@ -78,6 +78,7 @@ namespace Library.API.Controller
             }
         }
 
+        [Authorize(Roles = "HOD")]
         [HttpGet("{departmentId}/get-timetable")]
         public IActionResult GetDepartmentTimeTable(int departmentId)
         {
@@ -92,6 +93,7 @@ namespace Library.API.Controller
             }
         }
 
+        [Authorize(Roles = "HOD")]
         [HttpPost("upsert-timetable")]
         public async Task<IActionResult> UpsertTimeTable([FromBody] TimeTableRequest request)
         {
@@ -110,6 +112,7 @@ namespace Library.API.Controller
             }
         }
 
+        [Authorize(Roles = "HOD")]
         [HttpDelete("async/{timeTableId:int}")]
         public async Task<IActionResult> DeleteTimeTableAsync(int timeTableId)
         {

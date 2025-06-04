@@ -103,5 +103,11 @@ namespace Library.Business.Provider.Department
         {
             return _departmentService.GetAllDepartments();
         }
+
+        public async Task<(List<StudentDto> Students, SubjectDto Subject)> GetStudentsAndSubjectsByDepartmentAsync(int departmentId)
+        {
+            return await Task.Run(() => _departmentService.GetStudentsAndSubjectsByDepartment(departmentId));
+        }
+
     }
 }
